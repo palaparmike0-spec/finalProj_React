@@ -2,48 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExhibitRequest;
+use App\Http\Requests\UpdateExhibitRequest;
+use App\Http\Resources\ExhibitResource;
 use App\Models\Exhibit;
 use Illuminate\Http\Request;
 
 class ExhibitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Exhibit::with('artifacts');
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        return ExhibitResource::collection($query->latest()->paginate(10));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreExhibitRequest $request)
     {
-        //
+        $exhibit = Exhibit::create($request->safe()->except('artifact_ids'));
+        $exhibit->artifacts()->sync($request->input('artifact_ids', []));
+
+        return (new ExhibitResource($exhibit->load('artifacts')))
+            ->response()
+            ->setStatusCode(201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Exhibit $exhibit)
     {
-        //
+        return new ExhibitResource($exhibit->load('artifacts'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Exhibit $exhibit)
+    public function update(UpdateExhibitRequest $request, Exhibit $exhibit)
     {
-        //
+        $exhibit->update($request->safe()->except('artifact_ids'));
+
+        if ($request->has('artifact_ids')) {
+            $exhibit->artifacts()->sync($request->input('artifact_ids', []));
+        }
+
+        return new ExhibitResource($exhibit->load('artifacts'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Exhibit $exhibit)
     {
-        //
+        $exhibit->delete();
+
+        return response()->noContent(); // 204
     }
 }

@@ -2,48 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArtifactRequest;
+use App\Http\Requests\UpdateArtifactRequest;
+use App\Http\Resources\ArtifactResource;
 use App\Models\Artifact;
 use Illuminate\Http\Request;
 
 class ArtifactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Artifact::with('exhibits');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // ?all=1 returns every artifact without pagination (for dropdowns and pickers)
+        if ($request->boolean('all')) {
+            return ArtifactResource::collection($query->orderBy('name')->get());
+        }
+
+        return ArtifactResource::collection($query->latest()->paginate(10));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreArtifactRequest $request)
     {
-        //
+        $artifact = Artifact::create([
+            ...$request->validated(),
+            'created_by' => $request->user()->id,
+        ]);
+
+        return (new ArtifactResource($artifact->load('exhibits')))
+            ->response()
+            ->setStatusCode(201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Artifact $artifact)
     {
-        //
+        return new ArtifactResource($artifact->load('exhibits'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Artifact $artifact)
+    public function update(UpdateArtifactRequest $request, Artifact $artifact)
     {
-        //
+        $artifact->update($request->validated());
+
+        return new ArtifactResource($artifact->load('exhibits'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Artifact $artifact)
     {
-        //
+        $artifact->delete();
+
+        return response()->noContent(); // 204
     }
 }
