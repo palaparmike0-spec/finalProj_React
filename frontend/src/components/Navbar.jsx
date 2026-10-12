@@ -20,6 +20,7 @@ export default function Navbar() {
       </button>
       <div className={open ? 'navbar-links open' : 'navbar-links'} onClick={() => setOpen(false)}>
         <NavLink to="/" end>Dashboard</NavLink>
+        <NavLink to="/artifacts">Artifacts</NavLink>
         {/* More links are added in the next steps:
             Artifacts, Exhibits, Loan Requests, and Users (admin only) */}
         {isAdmin && <span className="badge">Admin</span>}

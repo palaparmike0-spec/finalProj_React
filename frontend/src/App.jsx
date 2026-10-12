@@ -1,9 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Artifacts from './pages/Artifacts';
+import ArtifactForm from './pages/ArtifactForm';
 
 export default function App() {
   return (
@@ -21,8 +24,11 @@ export default function App() {
         }
       >
         <Route path="/" element={<Dashboard />} />
-        {/* Artifacts, Exhibits, Loan Requests are added next.
-            Admin-only pages will be wrapped in <AdminRoute>. */}
+        <Route path="/artifacts" element={<Artifacts />} />
+
+        {/* Admin only */}
+        <Route path="/artifacts/new" element={<AdminRoute><ArtifactForm /></AdminRoute>} />
+        <Route path="/artifacts/:id/edit" element={<AdminRoute><ArtifactForm /></AdminRoute>} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

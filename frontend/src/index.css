@@ -311,3 +311,57 @@ th {
     display: flex;
   }
 }
+/* Buttons: only full width inside forms */
+.btn-primary {
+  width: auto;
+}
+
+.auth-card .btn-primary {
+  width: 100%;
+}
+
+a.btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Page layout helpers */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.page-header h2 {
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar .input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.form-card {
+  max-width: 600px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
