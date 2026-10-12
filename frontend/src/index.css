@@ -60,6 +60,7 @@ h2 {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .navbar-links a {
@@ -155,6 +156,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 1rem;
+  font-family: inherit;
 }
 
 .input:focus {
@@ -172,6 +174,17 @@ h2 {
   margin: 0.25rem 0 0;
 }
 
+.form-card {
+  max-width: 600px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
 /* Buttons */
 .btn {
   border: none;
@@ -186,9 +199,18 @@ h2 {
   cursor: not-allowed;
 }
 
+a.btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .btn-primary {
   background: var(--primary);
   color: #fff;
+  width: auto;
+}
+
+.auth-card .btn-primary {
   width: 100%;
 }
 
@@ -256,6 +278,10 @@ h2 {
   max-width: 420px;
 }
 
+.modal h3 {
+  margin-top: 0;
+}
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -263,7 +289,7 @@ h2 {
   margin-top: 1rem;
 }
 
-/* Tables and pagination (used in the next steps) */
+/* Tables and pagination */
 .table-wrap {
   overflow-x: auto;
 }
@@ -292,37 +318,6 @@ th {
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
-}
-
-/* Mobile */
-@media (max-width: 700px) {
-  .navbar-toggle {
-    display: block;
-  }
-
-  .navbar-links {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .navbar-links.open {
-    display: flex;
-  }
-}
-/* Buttons: only full width inside forms */
-.btn-primary {
-  width: auto;
-}
-
-.auth-card .btn-primary {
-  width: 100%;
-}
-
-a.btn {
-  display: inline-block;
-  text-decoration: none;
 }
 
 /* Page layout helpers */
@@ -355,13 +350,75 @@ a.btn {
   white-space: nowrap;
 }
 
-.form-card {
-  max-width: 600px;
+/* Exhibit artifact picker */
+.picker {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: #fff;
 }
 
-.form-actions {
+.picker-item {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
+  padding: 0.3rem 0;
+  font-weight: normal !important;
+  cursor: pointer;
+}
+
+/* Loan status badges */
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff4d6;
+  color: #8a6100;
+}
+
+.status-approved {
+  background: #e8f5e9;
+  color: var(--success);
+}
+
+.status-rejected {
+  background: #fdecea;
+  color: var(--danger);
+}
+
+.status-returned {
+  background: #e3eefb;
+  color: #1c5aa6;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .navbar-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }

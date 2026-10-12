@@ -21,8 +21,9 @@ export default function Navbar() {
       <div className={open ? 'navbar-links open' : 'navbar-links'} onClick={() => setOpen(false)}>
         <NavLink to="/" end>Dashboard</NavLink>
         <NavLink to="/artifacts">Artifacts</NavLink>
-        {/* More links are added in the next steps:
-            Artifacts, Exhibits, Loan Requests, and Users (admin only) */}
+        <NavLink to="/exhibits">Exhibits</NavLink>
+        <NavLink to="/loan-requests">Loan Requests</NavLink>
+        {isAdmin && <NavLink to="/users">Users</NavLink>}
         {isAdmin && <span className="badge">Admin</span>}
         <span className="navbar-user">{user?.name}</span>
         <button className="btn btn-secondary" onClick={handleLogout}>
