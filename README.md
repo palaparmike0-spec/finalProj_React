@@ -126,12 +126,22 @@ Screenshots of the main pages are in [`docs/screenshots`](docs/screenshots).
 
 https://drive.google.com/drive/folders/1zpgDNLEGUuNAaRsjhUNVHudoOQIRfd-0?usp=sharing
 
+
+## Running the Tests
+
+```bash
+cd backend
+php artisan test
+```
+The feature tests cover login, role protection (401 and 403), artifact validation (422), the loan request workflow, and the dashboard. They use an in-memory database, so your data is not affected.
+
 ## Known Limitations and Phase 2 Ideas
 
 - No artifact image upload yet
 - No email notifications on loan decisions
 - No public visitor page for current exhibits
 - Reports cannot yet be exported to PDF or CSV
+
 
 ## References
 
