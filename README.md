@@ -124,7 +124,7 @@ Screenshots of the main pages are in [`docs/screenshots`](docs/screenshots).
 
 ## Demo Video
 
-(Paste the link here after recording.)
+https://drive.google.com/drive/folders/1zpgDNLEGUuNAaRsjhUNVHudoOQIRfd-0?usp=sharing
 
 ## Known Limitations and Phase 2 Ideas
 
